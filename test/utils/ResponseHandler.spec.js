@@ -1,11 +1,11 @@
 const assert = require('chai').assert;
-const expect = require('chai').expect;
 
-const Match = require('../model/Match');
-const Config = require('../env/Config')
-const responseHandler = require('../utils/ResponseHandler');
-let upcomigGameFile = Config.UPCOMING_GAMES_FILE;
-let playedGameFile = Config.PLAYED_GAMES_FILE;
+
+const Match = require('../../model/Match');
+const Config = require('../../env/Config')
+const responseHandler = require('../../utils/ResponseHandler');
+const UPCOMING_GAME_FILE = Config.UPCOMING_GAMES_FILE;
+const PLAYED_GAME_FILE = Config.PLAYED_GAMES_FILE;
 
 let stubMatchesData = [
   { home_team: 'Chelsea',
@@ -30,11 +30,11 @@ let stubMatchesResponseObjects = [];
 let stubMatchesObj = [];
 stubMatchesData.forEach(match => {
   if(match.kickoff) {
-    let matchObj = new Match(match, upcomigGameFile);
+    let matchObj = new Match(match, UPCOMING_GAME_FILE);
     stubMatchesObj.push(matchObj);
     stubMatchesResponseObjects.push(matchObj.createResponse());
   }else {
-    let matchObj = new Match(match, playedGameFile)
+    let matchObj = new Match(match, PLAYED_GAME_FILE)
     stubMatchesObj.push(matchObj);
     stubMatchesResponseObjects.push(matchObj.createResponse());
   }

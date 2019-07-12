@@ -18,7 +18,7 @@ module.exports = {
 
   emit(eventName, value){
     let cbs = this.events[eventName];
-    cbs.forEach((cb)=> {
+    cbs.forEach((cb) => {
       cb(value)
     });
   }

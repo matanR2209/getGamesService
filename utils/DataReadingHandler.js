@@ -41,7 +41,7 @@ filterMatchesByTeam = (matches, teamName) => {
 filterMatchesByTournament = (matches, tournament) => {
   let resultMatchesByTournament = []
   matches.forEach( match => {
-    if ( match.tournament === tournament) {
+    if ( match.data.tournament === tournament ) {
       resultMatchesByTournament.push(new Match(match.data, match.file));
     }
   });
