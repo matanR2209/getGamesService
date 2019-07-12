@@ -26,12 +26,17 @@ let stubMatchesData = [
     start_time: 'Sunday 19th February 2017' }
 ];
 
-let stubMatchesObjects = [];
+let stubMatchesResponseObjects = [];
+let stubMatchesObj = [];
 stubMatchesData.forEach(match => {
   if(match.kickoff) {
-    stubMatchesObjects.push(new Match(match, upcomigGameFile));
+    let matchObj = new Match(match, upcomigGameFile);
+    stubMatchesObj.push(matchObj);
+    stubMatchesResponseObjects.push(matchObj.createResponse());
   }else {
-    stubMatchesObjects.push(new Match(match, playedGameFile));
+    let matchObj = new Match(match, playedGameFile)
+    stubMatchesObj.push(matchObj);
+    stubMatchesResponseObjects.push(matchObj.createResponse());
   }
 });
 
@@ -39,9 +44,9 @@ describe('ResponseHandler', function () {
   it('should have the expected  structure for succeed response',  () => {
     let results = {
       status: 'done',
-      data: stubMatchesObjects
+      data: stubMatchesResponseObjects
     }
-    assert.deepEqual(responseHandler('done', stubMatchesObjects), results);
+    assert.deepEqual(responseHandler('done', stubMatchesObj), results);
   });
 
   it('should have the expected  structure for failed response',  () => {
