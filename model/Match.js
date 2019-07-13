@@ -56,6 +56,14 @@ module.exports = class Match {
     return this.score;
   }
 
+  get _status() {
+    return this.status;
+  }
+
+  get _kickoff() {
+    return this.kickoff;
+  }
+
   createResponse() {
     let matchJSON = {
       "home_team"  : this.homeTeam._name,

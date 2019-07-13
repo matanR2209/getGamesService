@@ -23,7 +23,7 @@ describe('Emitter', function () {
   // });
 
   it('should remove all functions asccocieted with the event name',  () => {
-    let emitterResult = emitter.subscribe(eventName, cb);
+    const emitterResult = emitter.subscribe(eventName, cb);
     emitterResult.unsubscribe();
     assert.equal(emitter.events[eventName].length, 0);
   });

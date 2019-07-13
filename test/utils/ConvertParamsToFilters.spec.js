@@ -1,51 +1,46 @@
 const assert = require('chai').assert;
 
 const converParamsToFilters = require('../../utils/ConvertParamsToFilters');
-const Statuses = require('../../model/MatchStatuses')
+const testingData = require('../testindData')
 
 describe('ConvertParamsToFilters', function () {
-  let teamName = 'Arsenal';
-  let statusA = Statuses.UPCOMING;
-  let statusB = Statuses.PLAYED;
-  let tournamnetA = 'fa';
-  let tournamentB = 'premier-league';
-
   let testData = [
     {
-      params : { teamName: teamName, status: undefined },
+      params : { teamName: testingData.teamName, status: undefined },
       expectedFilters : [
         { queryParamName: 'teamName',
           inDataKey: [ 'home_team', 'away_team' ],
-          searchValue: teamName }
+          searchValue: testingData.teamName }
       ]
     },
     {
-      params: { teamName: teamName, status: statusA},
+      params: { teamName: testingData.teamName, status: testingData.statuses.UPCOMING},
       expectedFilters: [
         { queryParamName: 'teamName',
           inDataKey: [ 'home_team', 'away_team' ],
-          searchValue: teamName },
+          searchValue: testingData.teamName },
         { queryParamName: 'status',
           inDataKey: [ 'status' ],
-          searchValue: statusA }
+          searchValue: testingData.statuses.UPCOMING }
       ]
     },
     {
-      params: { tournamentName: tournamnetA, status: undefined },
+      params: { tournamentName: testingData.tournaments.tournamentA, status: undefined },
       expectedFilters: [
         { queryParamName: 'tournamentName',
-        inDataKey: [ 'tournament' ],
-        searchValue: tournamnetA }]
+          inDataKey: [ 'tournament' ],
+          searchValue: testingData.tournaments.tournamentA }]
     },
     {
-      params: { tournamentName: tournamentB, status: statusB },
+      params: { tournamentName: testingData.tournaments.tournamentB, status: testingData.statuses.PLAYED },
       expectedFilters: [
         { queryParamName: 'tournamentName',
-        inDataKey: [ 'tournament' ],
-        searchValue: tournamentB },
+          inDataKey: [ 'tournament' ],
+          searchValue: testingData.tournaments.tournamentB },
         { queryParamName: 'status',
           inDataKey: [ 'status' ],
-          searchValue: statusB } ]
+          searchValue: testingData.statuses.PLAYED }
+      ]
     }
   ];
   it('should return array of filters by that matches the query params',  () => {

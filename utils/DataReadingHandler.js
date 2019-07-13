@@ -8,7 +8,7 @@ module.exports = {
 
   getMatches: (searchBy, value, cb) => {
     DataTransformer.transform();
-    let emitter = Emitter.subscribe('matchesLoaded', (totalMatches) => {
+    const emitter = Emitter.subscribe('matchesLoaded', (totalMatches) => {
       switch ( searchBy ) {
         case 'teams': {
           let matchesByTeam =  filterMatchesByTeam(totalMatches, value);

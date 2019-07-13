@@ -1,6 +1,6 @@
 module.exports = (filters, matchesList) => {
   if(filters.length === 0 ) {
-    return gamesList;
+    return matchesList;
   }
   let filteredResults = [];
   matchesList.forEach (match  => {

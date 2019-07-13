@@ -15,11 +15,15 @@ module.exports = class Tournament {
     return this.id
   }
 
-  addMatch(matches) {
+  resetTournamnetMatches() {
+    this.matchesList = [];
+  }
+
+  addMatches(matches) {
     if(Array.isArray(matches)) {
       this.matchesList = matches;
     }else {
-      this.matchesList.push(match);
+      this.matchesList.push(matches);
     }
   }
 };
