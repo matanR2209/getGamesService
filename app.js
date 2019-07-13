@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
-const morgan  = require('morgan')
+const fs = require('fs');
+const logger = require('morgan');
+
+app.use(logger('common', {
+  stream: fs.createWriteStream('./access.log', {flags: 'a'})
+}));
 
 const responseParseHandler = require('./utils/ResponseHandler');
 const config = require('./env/Config');
@@ -42,5 +47,4 @@ app.get('*', function(req, res){
   res.send(responseParseHandler('error',[] , error));
 });
 
-app.use(morgan('combined'))
 app.listen(process.env.PORT || 4000);
