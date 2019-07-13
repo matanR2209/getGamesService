@@ -11,7 +11,7 @@ const tournamentController = require('./controllers/tournamentController');
 app.get('/teams/:teamName/:status?', (req, res) => {
     let errorsSubscription = emitter.subscribe('errorEmitter', (e) => {
       let errorObj = {
-        error: e,
+        error: e.toString(),
         errorMsg: config.MESSAGES.GAMES_ERROR
       }
       errorsSubscription.unsubscribe();
@@ -24,7 +24,7 @@ app.get('/teams/:teamName/:status?', (req, res) => {
 app.get('/tournaments/:tournamentName/:status?', (req, res) => {
   let errorsSubscription = emitter.subscribe('errorEmitter', (e) => {
     let errorObj = {
-      error: e,
+      error: e.toString(),
       errorMsg: config.MESSAGES.GAMES_ERROR
     }
     errorsSubscription.unsubscribe();
@@ -35,7 +35,7 @@ app.get('/tournaments/:tournamentName/:status?', (req, res) => {
 
 app.get('*', function(req, res){
   let error = {
-    error: '404',
+    error: e.toString(),
     errorMsg: 'Wrong route'
   }
   res.send(responseParseHandler('error',[] , error));

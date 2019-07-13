@@ -15,7 +15,7 @@ module.exports = {
       });
     } catch (e) {
       let error = {
-        error: e,
+        error: e.toString(),
         errorMsg: 'Error getting Matches'
       }
       res.send(responseParseHandler('error',[] , error));
