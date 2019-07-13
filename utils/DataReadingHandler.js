@@ -8,7 +8,6 @@ module.exports = {
   getMatches: (searchBy, value, cb) => {
     try{
       DataTransformer.transform();
-      throw Error('ERORRRRRRR');
       const matchesLoadedSubscription = emitter.subscribe('matchesLoaded', (totalMatches) => {
         switch ( searchBy ) {
           case 'teams': {

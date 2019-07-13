@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const morgan  = require('morgan')
 
 const responseParseHandler = require('./utils/ResponseHandler');
 const config = require('./env/Config');
@@ -35,10 +36,11 @@ app.get('/tournaments/:tournamentName/:status?', (req, res) => {
 
 app.get('*', function(req, res){
   let error = {
-    error: e.toString(),
+    error: '404',
     errorMsg: 'Wrong route'
   }
   res.send(responseParseHandler('error',[] , error));
 });
 
+app.use(morgan('combined'))
 app.listen(process.env.PORT || 4000);
