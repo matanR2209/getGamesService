@@ -8,10 +8,18 @@ const responseParseHandler  = require('../utils/ResponseHandler');
 module.exports = {
   getTeams: (req, res) => {
     let filters = createFiltersHandler(req.params);
-    dataHandler.getMatches('teams', req.params.teamName, (matchesList) => {
-      let filteredResults = filteringHandler(filters, matchesList);
-      res.send(responseParseHandler('done', filteredResults));
-    });
+    try {
+      dataHandler.getMatches('teams', req.params.teamName, (matchesList) => {
+        let filteredResults = filteringHandler(filters, matchesList);
+        res.send(responseParseHandler('done', filteredResults));
+      });
+    } catch (e) {
+      let error = {
+        error: e,
+        errorMsg: 'Error getting Matches'
+      }
+      res.send(responseParseHandler('error',[] , error));
+    }
   },
 }
 

@@ -1,31 +1,35 @@
 const Match = require('../model/Match');
-const Tournamnet = require('../model/Tournament');
+const Tournament = require('../model/Tournament');
+
 const DataTransformer =require('./DataTransformingHandler');
-const Emitter = require('./Emitter');
+const emitter = require('./Emitter');
 
 module.exports = {
-
   getMatches: (searchBy, value, cb) => {
-    DataTransformer.transform();
-    const emitter = Emitter.subscribe('matchesLoaded', (totalMatches) => {
-      switch ( searchBy ) {
-        case 'teams': {
-          let matchesByTeam = filterMatchesByTeam(totalMatches, value);
-          cb(matchesByTeam);
-          break;
+    try{
+      DataTransformer.transform();
+      const emitter = emitter.subscribe('matchesLoaded', (totalMatches) => {
+        switch ( searchBy ) {
+          case 'teams': {
+            let matchesByTeam = filterMatchesByTeam(totalMatches, value);
+            cb(matchesByTeam);
+            break;
+          }
+          case 'tournaments': {
+            let matchesByTournament  =  filterMatchesByTournament(totalMatches, value);
+            let newTournament = new Tournament(value, matchesByTournament);
+            cb(newTournament.matchesList);
+            break;
+          }
+          default:
+            cb([]);
         }
-        case 'tournaments': {
-          let matchesByTournament  =  filterMatchesByTournament(totalMatches, value);
-          let newTournament = new Tournamnet(value, matchesByTournament);
-          cb(newTournament.matchesList);
-          break;
-        }
-        default:
-          cb([]);
-      }
-      emitter.unsubscribe();
-    });
-  },
+        emitter.unsubscribe();
+      });
+    } catch (e) {
+      emitter.emit('errorEmitter', e);
+    }
+  }
 }
 
 filterMatchesByTeam = (matches, teamName) => {

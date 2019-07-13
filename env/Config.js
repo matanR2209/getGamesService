@@ -9,5 +9,9 @@ module.exports = Object.freeze({
     status : ['status'],
     kickoff : ['kickoff'],
     startTime : ['start_time']
+  },
+
+  MESSAGES: {
+     GAMES_ERROR : 'Error getting matches, please try again',
   }
 });

@@ -3,25 +3,29 @@ const fs = require('fs');
 const dataFolder = './data/';
 
 const Config = require('../env/Config');
-const Emitter = require('./Emitter')
+const emitter = require('./Emitter')
 
 module.exports = {
   transform: ( ) => {
-    let filesCounter = 0;
-    fs.readdirSync( dataFolder ).forEach( file => {
-      filesCounter++;
-    } );
-    switch ( Config.FILE_TYPE ) {
-      case 'csv':
-        return  transformCSVToArray(filesCounter);
-      // case 'http' :
-      //   transformHTTPToArray();
-      //   return
-      // case 'json':
-      //   transformJSONToArray();
-      //   return;
-      default:
-        Emitter.emit('matchesLoaded', []);
+    try{
+      let filesCounter = 0;
+      fs.readdirSync( dataFolder ).forEach( file => {
+        filesCounter++;
+      } );
+      switch ( Config.FILE_TYPE ) {
+        case 'csv':
+          return  transformCSVToArray(filesCounter);
+        // case 'http' :
+        //   transformHTTPToArray();
+        //   return
+        // case 'json':
+        //   transformJSONToArray();
+        //   return;
+        default:
+          emitter.emit('matchesLoaded', []);
+      }
+    }catch (e) {
+      emitter.emit('errorEmitter', e);
     }
   }
 }
@@ -36,7 +40,7 @@ transformCSVToArray = ( filesCounter ) => {
       } ).on( "end", function () {
       filesScanned++;
       if ( filesScanned === filesCounter ) {
-        Emitter.emit('matchesLoaded', transformedArray);
+        emitter.emit('matchesLoaded', transformedArray);
       }
     } );
   } );

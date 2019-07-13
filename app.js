@@ -1,18 +1,35 @@
 const express = require('express');
 const app = express();
 
+const responseParseHandler = require('./utils/ResponseHandler');
+const config = require('./env/Config');
+const emitter = require('./utils/Emitter');
 const teamController = require('./controllers/teamController');
 const tournamentController = require('./controllers/tournamentController');
 
-const responseHanlder = require('./utils/ResponseHandler');
-
 // '/team/:teamName/:status?/:tournamentName?'
 app.get('/teams/:teamName/:status?', (req, res) => {
-    teamController.getTeams(req, res);
+    let errorsSubscription = emitter.subscribe('errorEmitter', (e) => {
+      let errorObj = {
+        error: e,
+        errorMsg: config.MESSAGES.GAMES_ERROR
+      }
+      errorsSubscription.unsubscribe();
+      res.send(responseParseHandler('error',[] , errorObj));
+    });
+  teamController.getTeams(req, res);
 });
 
 // '/tournament/:tournamentName/:status?/:teamName'
 app.get('/tournaments/:tournamentName/:status?', (req, res) => {
+  let errorsSubscription = emitter.subscribe('errorEmitter', (e) => {
+    let errorObj = {
+      error: e,
+      errorMsg: config.MESSAGES.GAMES_ERROR
+    }
+    errorsSubscription.unsubscribe();
+    res.send(responseParseHandler('error',[] , errorObj));
+  });
   tournamentController.getTeams(req, res);
 });
 
@@ -21,7 +38,7 @@ app.get('*', function(req, res){
     error: '404',
     errorMsg: 'Wrong route'
   }
-  res.send(responseHanlder('error',[] , error));
+  res.send(responseParseHandler('error',[] , error));
 });
 
 app.listen(process.env.PORT || 4000);
