@@ -18,8 +18,12 @@ module.exports = {
 
   emit(eventName, value){
     let cbs = this.events[eventName];
-    cbs.forEach((cb) => {
-      cb(value)
-    });
+    try {
+      cbs.forEach((cb) => {
+        cb(value)
+      });
+    } catch (e) {
+      return null;
+    }
   }
 }
