@@ -3,8 +3,8 @@ const assert = require('chai').assert;
 const Config = require('../../env/Config');
 const Match = require('../../model/Match');
 const Tournament = require('../../model/Tournament');
-const PLAYED_GAME_FILE = Config.PLAYED_GAMES_FILE;
-const UPCOMING_GAME_FILE = Config.UPCOMING_GAMES_FILE;
+const PLAYED_GAME_FILE = Config.PLAYED_GAMES_FILE_NAME;
+const UPCOMING_GAME_FILE = Config.UPCOMING_GAMES_FILE_NAME;
 
 let stubMatchesData = [
   { home_team: 'Manchester United',

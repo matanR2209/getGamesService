@@ -1,3 +1,4 @@
+const Config = require('../env/Config')
 module.exports = (queryParams) => {
   let filters = [];
 
@@ -11,23 +12,23 @@ module.exports = (queryParams) => {
   let filteringOptions = [
     {
       queryParamName: 'teamName',
-      inDataKey: ['home_team', 'away_team']
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.teams
     },
     {
       queryParamName: 'tournamentName',
-      inDataKey: ['tournament']
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.tournament
     },
     {
       queryParamName: 'status',
-      inDataKey: ['status']
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.status
     },
     {
       queryParamName: 'kickoff',
-      inDataKey: ['kickoff']
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.kickoff
     },
     {
       queryParamName: 'startTime',
-      inDataKey: ['kickoff']
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.startTime
     }
   ];
   filteringOptions.forEach(tempFilter => {

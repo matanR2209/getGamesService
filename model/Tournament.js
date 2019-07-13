@@ -2,10 +2,10 @@ const Match = require('./Match');
 
 module.exports = class Tournament {
 
-  constructor (tourName) {
+  constructor (tourName, games =[]) {
     this.name =  tourName;
     this.id   = '_' +tourName;
-    this.matchesList = [];
+    this.matchesList = games;
   }
   get _name() {
     return this.name

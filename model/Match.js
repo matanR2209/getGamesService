@@ -9,13 +9,11 @@ module.exports = class Match {
       away_team: match.away_team,
       tournament: match.tournament,
       start_time: match.start_time} );
-
+    this.status = this.setMatchStatus(match, file);
     //Create instance of Team for both home and away, but still keep the home_team and away_team
     // as parameters for more convince in the filtering options
     this.homeTeam = new Team(this.home_team);
     this.awayTeam = new Team(this.away_team);
-    this.tournamentobj = new Tournament(this.tournament)
-    this.status = this.setMatchStatus(match, file);
   }
 
 
@@ -43,11 +41,11 @@ module.exports = class Match {
   }
 
   setMatchStatus(matchData, file ) {
-    if(file === Config.PLAYED_GAMES_FILE) {
+    if(file === Config.PLAYED_GAMES_FILE_NAME) {
       this.score = matchData.home_score + ' - ' + matchData.away_score;
       return Statuses.PLAYED;
     }
-    else if ( file === Config.UPCOMING_GAMES_FILE) {
+    else if ( file === Config.UPCOMING_GAMES_FILE_NAME) {
       this.kickoff = matchData.kickoff;
       return Statuses.UPCOMING;
     }

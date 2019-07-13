@@ -7,8 +7,8 @@ module.exports = {
     PLAYED : Statuses.PLAYED,
   },
   files: {
-    PLAYED_GAME_FILE : Config.PLAYED_GAMES_FILE,
-    UPCOMING_GAME_FILE : Config.UPCOMING_GAMES_FILE,
+    PLAYED_GAME_FILE : Config.PLAYED_GAMES_FILE_NAME,
+    UPCOMING_GAME_FILE : Config.UPCOMING_GAMES_FILE_NAME,
   },
   tournaments: {
     tournamentA : 'fa',

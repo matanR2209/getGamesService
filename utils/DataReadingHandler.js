@@ -1,8 +1,7 @@
-const Match = require('../model/Match')
-const responseParseHandler  = require('../utils/ResponseHandler');
-
-const DataTransformer =require('./DataTransformingHandler')
-const Emitter = require('./Emitter')
+const Match = require('../model/Match');
+const Tournamnet = require('../model/Tournament');
+const DataTransformer =require('./DataTransformingHandler');
+const Emitter = require('./Emitter');
 
 module.exports = {
 
@@ -11,13 +10,14 @@ module.exports = {
     const emitter = Emitter.subscribe('matchesLoaded', (totalMatches) => {
       switch ( searchBy ) {
         case 'teams': {
-          let matchesByTeam =  filterMatchesByTeam(totalMatches, value);
+          let matchesByTeam = filterMatchesByTeam(totalMatches, value);
           cb(matchesByTeam);
           break;
         }
         case 'tournaments': {
           let matchesByTournament  =  filterMatchesByTournament(totalMatches, value);
-          cb(matchesByTournament);
+          let newTournament = new Tournamnet(value, matchesByTournament);
+          cb(newTournament.matchesList);
           break;
         }
         default:
