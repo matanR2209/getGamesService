@@ -1,15 +1,12 @@
 const Team = require('./Team');
-const Tournament = require('./Tournament');
 const Statuses = require('./MatchStatuses');
 const Config = require('../env/Config');
 
 module.exports = class Match {
   constructor(match, file){
-    Object.assign(this, { home_team: match.home_team,
-      away_team: match.away_team,
-      tournament: match.tournament,
-      start_time: match.start_time} );
+    Object.assign(this, match );
     this.status = this.setMatchStatus(match, file);
+
     //Create instance of Team for both home and away, but still keep the home_team and away_team
     // as parameters for more convince in the filtering options
     this.homeTeam = new Team(this.home_team);
@@ -28,7 +25,7 @@ module.exports = class Match {
     return filterFlag;
   }
 
-  //check each filter with few possibilities - this allows flexible filtering
+  //check each filter with few possibilities (array of possible values) - this allows flexible filtering
   checkMatchWithCurrentFilter (filter) {
     let filterStatus = false;
     filter.inDataKey.forEach (tempDataKey => {

@@ -2,22 +2,28 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const logger = require('morgan');
-const responseParseHandler = require('./utils/ResponseHandler');
+
 const config = require('./env/Config');
+
+const responseParseHandler = require('./utils/ResponseHandler');
 const emitter = require('./utils/Emitter');
 const teamController = require('./controllers/teamController');
 const tournamentController = require('./controllers/tournamentController');
+
 const LOGS_FOLDER = './logs/';
 const LOGS_FILE = config.LOGS.MORGAN_LOGS_FILE;
 
-
+//morgan logger for general request-response information
 app.use(logger('combined', {
   stream: fs.createWriteStream(LOGS_FOLDER + LOGS_FILE, {flags: 'a'})
 }));
 
 
+//possible endpoint for further filtering
 // '/team/:teamName/:status?/:tournamentName?'
+
 app.get('/teams/:teamName/:status?', (req, res) => {
+  //general error handling for this endpoint
     let errorsSubscription = emitter.subscribe('errorEmitter', (e) => {
       let errorObj = {
         error: e.toString(),
@@ -26,11 +32,16 @@ app.get('/teams/:teamName/:status?', (req, res) => {
       errorsSubscription.unsubscribe();
       res.send(responseParseHandler.createResponse('error',[], req , errorObj));
     });
+
   teamController.getTeams(req, res);
 });
 
+//possible endpoint for farther filtering
 // '/tournament/:tournamentName/:status?/:teamName'
+
 app.get('/tournaments/:tournamentName/:status?', (req, res) => {
+
+  //general error handling for this endpoint
   let errorsSubscription = emitter.subscribe('errorEmitter', (e) => {
     let errorObj = {
       error: e.toString(),
@@ -39,15 +50,8 @@ app.get('/tournaments/:tournamentName/:status?', (req, res) => {
     errorsSubscription.unsubscribe();
     res.send(responseParseHandler.createResponse('error', [], req, errorObj));
   });
-  tournamentController.getTeams(req, res);
-});
 
-app.get('*', function(req, res){
-  let error = {
-    error: '404',
-    errorMsg: 'Wrong route'
-  }
-  res.status(404).send(responseParseHandler.createResponse('error',[] ,req , error));
+  tournamentController.getTeams(req, res);
 });
 
 app.listen(process.env.PORT || 4000);

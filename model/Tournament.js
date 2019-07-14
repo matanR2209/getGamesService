@@ -1,7 +1,4 @@
-const Match = require('./Match');
-
 module.exports = class Tournament {
-
   constructor (tourName, games =[]) {
     this.name =  tourName;
     this.id   = '_' +tourName;

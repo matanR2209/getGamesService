@@ -7,6 +7,7 @@ const emitter = require('./Emitter');
 module.exports = {
   getMatches: (searchBy, value, cb) => {
     try{
+      //activate the data transforming, which will emit the 'matchesLoaded' an event once finished, with the matches list
       DataTransformer.transform();
       const matchesLoadedSubscription = emitter.subscribe('matchesLoaded', (totalMatches) => {
         switch ( searchBy ) {
