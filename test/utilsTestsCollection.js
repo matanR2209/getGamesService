@@ -6,7 +6,7 @@ const dataReadingSpec = require('./utils/DataReadingSpec');
 const dataTransformingSpec = require('./utils/DataTramsforming.spec');
 
 // run utils tests
-console.log('*********** running utils tests **********');
+
 let responseHandlerTests = responseHandlerSpec;
 let convertingParamsToFiltersTests =convertParamsToFilterSpec;
 let filteringTests =filteringHandlerSpec;
