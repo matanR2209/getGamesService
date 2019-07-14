@@ -10,8 +10,8 @@ module.exports = {
     let filters = createFiltersHandler(req.params);
     try {
       dataHandler.getMatches('teams', req.params.teamName, (matchesList) => {
-        let filteredResults = filteringHandler(filters, matchesList);
-        res.send(responseParseHandler('done', filteredResults));
+        let filteredResults = filteringHandler.filterMatches(filters, matchesList);
+        res.send(responseParseHandler.createResponse('done', filteredResults, req));
       });
     } catch (e) {
       let error = {

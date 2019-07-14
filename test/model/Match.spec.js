@@ -26,7 +26,7 @@ describe('Match played', function () {
 
   it('should contain the match score in the response',  () => {
     let match = new Match(stubPlayedMatch, testingData.files.PLAYED_GAME_FILE);
-    let matchResponse = match.createResponse();
+    let matchResponse = match.createItemResponse();
     assert.isDefined(matchResponse.score);
   });
 
@@ -44,7 +44,7 @@ describe('Upcoming match', function () {
 
   it('should contain the kickoff time in the response',  () => {
     let match = new Match(stubUpcomngMatch, testingData.files.UPCOMING_GAME_FILE);
-    let matchResponse = match.createResponse();
+    let matchResponse = match.createItemResponse();
     assert.isDefined(matchResponse.kicloff);
   });
 

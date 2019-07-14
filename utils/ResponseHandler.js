@@ -1,12 +1,20 @@
-module.exports = (status, data, error = null) => {
-  let response = {
-    status: status,
-    data: data.map(item  => {
-      return item.createResponse();
-  })
+let responseLogger = require('./ResponseLogger');
+let Config = require('../env/Config');
+module.exports = {
+  createResponse: (status, data, req, error = null) =>{
+    console.log(data);
+    let response = {
+      status: status,
+      data: data.map(item  => {
+        return item.createItemResponse();
+      })
+    }
+    if(error) {
+      response.error = error
+    }
+    if(Config.LOGS.RESPONSE_LOGGER_CONTROL) {
+      responseLogger.logResponse(response, req);
+    }
+    return response
   }
-  if(error) {
-    response.error = error
-  }
-  return response
 }

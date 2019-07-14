@@ -1,12 +1,14 @@
-module.exports = (filters, matchesList) => {
-  if(filters.length === 0 ) {
-    return matchesList;
-  }
-  let filteredResults = [];
-  matchesList.forEach (match  => {
-    if(match.isMatchingFilters(filters)) {
-      filteredResults.push(match);
+module.exports =  {
+  filterMatches: (filters, matchesList) => {
+    if(filters.length === 0 ) {
+      return matchesList;
     }
-  });
-  return filteredResults;
+    let filteredResults = [];
+    matchesList.forEach (match  => {
+      if(match.isMatchingFilters(filters)) {
+        filteredResults.push(match);
+      }
+    });
+    return filteredResults;
+  }
 }

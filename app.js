@@ -2,16 +2,19 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const logger = require('morgan');
-
-app.use(logger('common', {
-  stream: fs.createWriteStream('./access.log', {flags: 'a'})
-}));
-
 const responseParseHandler = require('./utils/ResponseHandler');
 const config = require('./env/Config');
 const emitter = require('./utils/Emitter');
 const teamController = require('./controllers/teamController');
 const tournamentController = require('./controllers/tournamentController');
+const LOGS_FOLDER = './logs/';
+const LOGS_FILE = config.LOGS.MORGAN_LOGS_FILE;
+
+
+app.use(logger('combined', {
+  stream: fs.createWriteStream(LOGS_FOLDER + LOGS_FILE, {flags: 'a'})
+}));
+
 
 // '/team/:teamName/:status?/:tournamentName?'
 app.get('/teams/:teamName/:status?', (req, res) => {
@@ -21,7 +24,7 @@ app.get('/teams/:teamName/:status?', (req, res) => {
         errorMsg: config.MESSAGES.GAMES_ERROR
       }
       errorsSubscription.unsubscribe();
-      res.send(responseParseHandler('error',[] , errorObj));
+      res.send(responseParseHandler.createResponse('error',[], req , errorObj));
     });
   teamController.getTeams(req, res);
 });
@@ -34,7 +37,7 @@ app.get('/tournaments/:tournamentName/:status?', (req, res) => {
       errorMsg: config.MESSAGES.GAMES_ERROR
     }
     errorsSubscription.unsubscribe();
-    res.send(responseParseHandler('error',[] , errorObj));
+    res.send(responseParseHandler.createResponse('error', [], req, errorObj));
   });
   tournamentController.getTeams(req, res);
 });
@@ -44,7 +47,7 @@ app.get('*', function(req, res){
     error: '404',
     errorMsg: 'Wrong route'
   }
-  res.send(responseParseHandler('error',[] , error));
+  res.status(404).send(responseParseHandler.createResponse('error',[] ,req , error));
 });
 
 app.listen(process.env.PORT || 4000);

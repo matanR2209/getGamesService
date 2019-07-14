@@ -37,8 +37,8 @@ describe('filteringHandler', function () {
   });
 
   it('should return array of filtered matches by the filters provided',  () => {
-    let filteredResultsA = filteringHandler(testFiltersA, stubMatchesObj);
-    let filteredResultsB = filteringHandler(testFiltersB, stubMatchesObj);
+    let filteredResultsA = filteringHandler.filterMatches(testFiltersA, stubMatchesObj);
+    let filteredResultsB = filteringHandler.filterMatches(testFiltersB, stubMatchesObj);
 
     filteredResultsA.forEach(match => {
       expect(match.isMatchingFilters(testFiltersA)).to.equal(true);
@@ -50,7 +50,7 @@ describe('filteringHandler', function () {
   });
 
   it('should return unfiltered matches',  () => {
-      let results = filteringHandler([], stubMatchesObj);
+      let results = filteringHandler.filterMatches([], stubMatchesObj);
       assert.deepEqual(results, stubMatchesObj);
   });
 });

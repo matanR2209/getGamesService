@@ -25,17 +25,18 @@ let stubMatchesData = [
     start_time: 'Sunday 19th February 2017' }
 ];
 
+let req = {url : 'testing/url'};
 let stubMatchesResponseObjects = [];
 let stubMatchesObj = [];
 stubMatchesData.forEach(match => {
   if(match.kickoff) {
-    let matchObj = new Match(match, testingData.UPCOMING_GAME_FILE);
+    let matchObj = new Match(match, testingData.files.UPCOMING_GAME_FILE);
     stubMatchesObj.push(matchObj);
-    stubMatchesResponseObjects.push(matchObj.createResponse());
+    stubMatchesResponseObjects.push(matchObj.createItemResponse());
   }else {
-    let matchObj = new Match(match, testingData.PLAYED_GAME_FILE)
+    let matchObj = new Match(match, testingData.files.PLAYED_GAME_FILE)
     stubMatchesObj.push(matchObj);
-    stubMatchesResponseObjects.push(matchObj.createResponse());
+    stubMatchesResponseObjects.push(matchObj.createItemResponse());
   }
 });
 
@@ -45,7 +46,7 @@ describe('ResponseHandler', function () {
       status: 'done',
       data: stubMatchesResponseObjects
     }
-    assert.deepEqual(responseHandler('done', stubMatchesObj), results);
+    assert.deepEqual(responseHandler.createResponse('done', stubMatchesObj, req), results);
   });
 
   it('should have the expected  structure for failed response',  () => {
@@ -60,6 +61,6 @@ describe('ResponseHandler', function () {
       data: [],
       error: errorObj
     }
-    assert.deepEqual(responseHandler('error', [], errorObj), results);
+    assert.deepEqual(responseHandler.createResponse('error', [], req, errorObj), results);
   });
 });
