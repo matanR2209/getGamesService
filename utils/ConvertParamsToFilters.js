@@ -1,7 +1,6 @@
 const Config = require('../env/Config')
 module.exports = (queryParams) => {
   let filters = [];
-
   //Filtering options will allow us to :
   // A. add as much filters as we want to the data, we just need to make sure that the queryParamName will match the query param name at the end point,
   //   and add the value in the data file to the inDataKey

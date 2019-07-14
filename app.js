@@ -3,7 +3,7 @@ const app = express();
 const fs = require('fs');
 const logger = require('morgan');
 
-const config = require('./env/Config');
+const Config = require('./env/Config');
 
 const responseParseHandler = require('./utils/ResponseHandler');
 const emitter = require('./utils/Emitter');
@@ -11,7 +11,7 @@ const teamController = require('./controllers/teamController');
 const tournamentController = require('./controllers/tournamentController');
 
 const LOGS_FOLDER = './logs/';
-const LOGS_FILE = config.LOGS.MORGAN_LOGS_FILE;
+const LOGS_FILE = Config.LOGS.MORGAN_LOGS_FILE;
 
 //morgan logger for general request-response information
 app.use(logger('combined', {

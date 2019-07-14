@@ -2,7 +2,6 @@ let responseLogger = require('./ResponseLogger');
 let Config = require('../env/Config');
 module.exports = {
   createResponse: (status, data, req, error = null) =>{
-    console.log(data);
     let response = {
       status: status,
       data: data.map(item  => {

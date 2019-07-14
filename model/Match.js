@@ -68,7 +68,8 @@ module.exports = class Match {
     }
     if(this.status === Statuses.PLAYED) {
       matchJSON.score = this.score;
-    } else if (this.status === Statuses.UPCOMING) {
+    }
+    if (this.status === Statuses.UPCOMING) {
       matchJSON.kicloff = this.kickoff;
     }
     return matchJSON
