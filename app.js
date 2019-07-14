@@ -4,6 +4,7 @@ const fs = require('fs');
 const logger = require('morgan');
 
 const Config = require('./env/Config');
+const routes = require('./routes/Routes');
 
 const responseParseHandler = require('./utils/ResponseHandler');
 const emitter = require('./utils/Emitter');
@@ -19,10 +20,10 @@ app.use(logger('combined', {
 }));
 
 
-//possible endpoint for further filtering
+//possible endpoint for farther filtering
 // '/team/:teamName/:status?/:tournamentName?'
 
-app.get('/teams/:teamName/:status?', (req, res) => {
+app.get(routes.TEAMS_ROUTE, (req, res) => {
   //general error handling for this endpoint
     let errorsSubscription = emitter.subscribe('errorEmitter', (e) => {
       let errorObj = {
@@ -39,8 +40,7 @@ app.get('/teams/:teamName/:status?', (req, res) => {
 //possible endpoint for farther filtering
 // '/tournament/:tournamentName/:status?/:teamName'
 
-app.get('/tournaments/:tournamentName/:status?', (req, res) => {
-
+app.get(routes.TOURNAMENTS_ROUTE, (req, res) => {
   //general error handling for this endpoint
   let errorsSubscription = emitter.subscribe('errorEmitter', (e) => {
     let errorObj = {
@@ -54,4 +54,6 @@ app.get('/tournaments/:tournamentName/:status?', (req, res) => {
   tournamentController.getTeams(req, res);
 });
 
-app.listen(process.env.PORT || 4000);
+app.listen(process.env.PORT || 4000, () => {
+  console.log('Games service is listening on port 4000 ')
+});

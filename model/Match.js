@@ -40,6 +40,8 @@ module.exports = class Match {
   setMatchStatus(matchData, file ) {
     if(file === Config.PLAYED_GAMES_FILE_NAME) {
       this.score = matchData.home_score + ' - ' + matchData.away_score;
+      this.home_score = this.home_score;
+      this.away_score = this.away_score;
       return Statuses.PLAYED;
     }
     else if ( file === Config.UPCOMING_GAMES_FILE_NAME) {
@@ -68,9 +70,11 @@ module.exports = class Match {
     }
     if(this.status === Statuses.PLAYED) {
       matchJSON.score = this.score;
+      matchJSON.home_score = this.home_score;
+      matchJSON.away_score = this.away_score;
     }
     if (this.status === Statuses.UPCOMING) {
-      matchJSON.kicloff = this.kickoff;
+      matchJSON.kickoff = this.kickoff;
     }
     return matchJSON
   }
