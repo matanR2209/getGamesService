@@ -13,7 +13,8 @@ const LOGS_FILE = Config.LOGS.GENERAL_LOGS_FILE
         ', Response status: ' + response.status + ', matches found: ' + response.data.length + '\r\n'
       fs.appendFile(LOGS_FOLDER + LOGS_FILE, responseSummery, function(err) {
         if(err) {
-          return console.log(err);
+
+          return false;
         }
       });
     }
