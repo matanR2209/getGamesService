@@ -1,24 +1,24 @@
 const Match = require('../model/Match');
 const Tournament = require('../model/Tournament');
 
-const DataTransformer =require('./DataTransformingHandler');
+const DataTransformer = require('./DataTransformingHandler');
 const emitter = require('./Emitter');
 
 module.exports = {
   getMatches: (searchBy, value, cb) => {
-    try{
-      //activate the data transforming, which will emit the 'matchesLoaded' an event once finished, with the matches list
+    try {
+      // activate the data transforming, which will emit the 'matchesLoaded' an event once finished, with the matches list
       DataTransformer.transform();
       const matchesLoadedSubscription = emitter.subscribe('matchesLoaded', (totalMatches) => {
-        switch ( searchBy ) {
+        switch (searchBy) {
           case 'teams': {
-            let matchesByTeam = filterMatchesByTeam(totalMatches, value);
+            const matchesByTeam = filterMatchesByTeam(totalMatches, value);
             cb(matchesByTeam);
             break;
           }
           case 'tournaments': {
-            let matchesByTournament  =  filterMatchesByTournament(totalMatches, value);
-            let newTournament = new Tournament(value, matchesByTournament);
+            const matchesByTournament = filterMatchesByTournament(totalMatches, value);
+            const newTournament = new Tournament(value, matchesByTournament);
             cb(newTournament.matchesList);
             break;
           }
@@ -30,25 +30,25 @@ module.exports = {
     } catch (e) {
       emitter.emit('errorEmitter', e);
     }
-  }
-}
+  },
+};
 
 filterMatchesByTeam = (matches, teamName) => {
-  let resultMatchesByTeam = []
-  matches.forEach( match => {
-    if ( match.data.home_team === teamName || match.data.away_team === teamName ) {
+  let resultMatchesByTeam = [];
+  matches.forEach((match) => {
+    if (match.data.home_team === teamName || match.data.away_team === teamName) {
       resultMatchesByTeam.push(new Match(match.data, match.file));
     }
   });
   return resultMatchesByTeam;
-}
+};
 
 filterMatchesByTournament = (matches, tournament) => {
-  let resultMatchesByTournament = []
-  matches.forEach( match => {
-    if ( match.data.tournament === tournament ) {
+  let resultMatchesByTournament = [];
+  matches.forEach((match) => {
+    if (match.data.tournament === tournament) {
       resultMatchesByTournament.push(new Match(match.data, match.file));
     }
   });
   return resultMatchesByTournament;
-}
+};

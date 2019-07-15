@@ -1,7 +1,7 @@
-const Config = require('../env/Config')
+const Config = require('../env/Config');
 module.exports = (queryParams) => {
   let filters = [];
-  //Filtering options will allow us to :
+  // Filtering options will allow us to :
   // A. add as much filters as we want to the data, we just need to make sure that the queryParamName will match the query param name at the end point,
   //   and add the value in the data file to the inDataKey
   // B. with inDataKey being array of options, we allow the filtering option to be more flexible
@@ -11,31 +11,32 @@ module.exports = (queryParams) => {
   let filteringOptions = [
     {
       queryParamName: 'teamName',
-      inDataKey: Config.DATA_ORIGIN_PARAMETERS.teams
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.teams,
     },
     {
       queryParamName: 'tournamentName',
-      inDataKey: Config.DATA_ORIGIN_PARAMETERS.tournament
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.tournament,
     },
     {
       queryParamName: 'status',
-      inDataKey: Config.DATA_ORIGIN_PARAMETERS.status
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.status,
     },
     {
       queryParamName: 'kickoff',
-      inDataKey: Config.DATA_ORIGIN_PARAMETERS.kickoff
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.kickoff,
     },
     {
       queryParamName: 'startTime',
-      inDataKey: Config.DATA_ORIGIN_PARAMETERS.startTime
-    }
+      inDataKey: Config.DATA_ORIGIN_PARAMETERS.startTime,
+    },
   ];
-  filteringOptions.forEach(tempFilter => {
-      let tempFilterName = tempFilter.queryParamName;
-      if(queryParams[tempFilterName]) {
-        tempFilter.searchValue = queryParams[tempFilterName];
-        filters.push(tempFilter);
-      }
+  filteringOptions.forEach((tempFilter) => {
+    let returnedFilter = tempFilter;
+    const tempFilterName = tempFilter.queryParamName;
+    if (queryParams[tempFilterName]) {
+      returnedFilter.searchValue = queryParams[tempFilter.queryParamName];
+      filters.push(tempFilter);
+    }
   });
   return filters;
-}
+};

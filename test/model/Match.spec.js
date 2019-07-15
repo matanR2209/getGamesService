@@ -45,7 +45,7 @@ describe('Upcoming match', function () {
   it('should contain the kickoff time in the response',  () => {
     let match = new Match(stubUpcomngMatch, testingData.files.UPCOMING_GAME_FILE);
     let matchResponse = match.createItemResponse();
-    assert.isDefined(matchResponse.kicloff);
+    assert.isDefined(matchResponse.kickoff);
   });
 
   it('should contain the correct match status',  () => {

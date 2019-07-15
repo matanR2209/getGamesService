@@ -68,7 +68,7 @@ describe('Tournament', function () {
 
   it('should allow adding one match to the tournament',  () => {
       let match = new Match(stubMatchesData[1], UPCOMING_GAME_FILE);
-      tournament.resetTournamnetMatches();
+      tournament.resetTournamentMatches();
       tournament.addMatches(match);
       assert.equal(tournament.matchesList.length, 1);
   });
