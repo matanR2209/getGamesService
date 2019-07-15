@@ -6,7 +6,7 @@ module.exports = Object.freeze({
   LOGS: {
     RESPONSE_LOGGER_CONTROL: true,
     GENERAL_LOGS_FILE: 'general_logs.log',
-    MORGAN_LOGS_FILE: 'morgan_access.log',
+    MORGAN_LOGS_FILE: 'morgan_logs.log',
   },
 
   DATA_ORIGIN_PARAMETERS: {

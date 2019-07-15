@@ -3,4 +3,5 @@
 /data_original
 /nyc_output
 /logs
-/eslintsrc.js
+./eslintsrc.js
+./Readme_service
