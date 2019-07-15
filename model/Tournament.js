@@ -17,6 +17,7 @@ module.exports = class Tournament {
     this.matchesList = [];
   }
 
+
   addMatches(matches) {
     if (Array.isArray(matches)) {
       this.matchesList = matches;
